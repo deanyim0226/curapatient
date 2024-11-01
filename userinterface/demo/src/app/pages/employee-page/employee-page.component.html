@@ -1,0 +1,21 @@
+<h1>Employee Management</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Employee-Id</th>
+            <th>Name</th>
+            <th>Phone-Number</th>
+            <th>Supervisors</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let employee of employees">
+            <td> {{ employee.employee_Id }}</td>
+            <td> {{ employee.name }}</td>
+            <td> {{ employee.phone_number }}</td>
+            <td> {{ employee.supervisors }}</td>
+            <td> add | delete | update | </td>
+        </tr>
+    </tbody>
+</table>
