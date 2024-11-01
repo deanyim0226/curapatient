@@ -21,6 +21,12 @@ public class UserServiceImplementation implements UserService {
     @Override
     public User saveUser(User newUser) {
 
+        User retrievedUser = userRepository.findUserByUsername(newUser.getUsername());
+
+        if(retrievedUser != null){
+            return null;
+        }
+
         String password = newUser.getPassword();
         String encodedPassword = encoder.encode(password);
         newUser.setPassword(encodedPassword);
@@ -31,6 +37,16 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User findUserByName(String name) {
+
+        User retrievedUser = userRepository.findUserByUsername(name);
+        if(retrievedUser != null){
+            return retrievedUser;
+        }
         return null;
+    }
+
+    @Override
+    public boolean checkUser(User existingUser, String password) {
+        return encoder.matches(password, existingUser.getPassword());
     }
 }

@@ -14,9 +14,9 @@ import java.util.List;
 @RestController
 public class EmployeeController {
 
+    private static final String APIKEY = "securityapikey";
     @Autowired
     EmployeeService employeeService;
-
     @Autowired
     Validate validate;
 
