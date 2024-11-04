@@ -8,9 +8,10 @@ import { User } from 'src/app/data/user-data';
   providedIn: 'root'
 })
 export class UserService {
+  
+  private loginSubject = new BehaviorSubject<boolean>(false);
+  public loginStatus = this.loginSubject.asObservable();
   public readonly API_KEY = 'authentication'
-  private dynamicSubject = new BehaviorSubject<boolean>(false);
-  public isloggedIn = this.dynamicSubject.asObservable();
   
   SpringBaseUrl:string = 'http://localhost:8088';
 
@@ -24,17 +25,23 @@ export class UserService {
     return this.http.post<authentication>(this.SpringBaseUrl+ "/login", user);
   }
 
-  setSession(apikey:string):void{
+  setApikey(apikey:string):void{
     localStorage.setItem(this.API_KEY,apikey);
-    this.dynamicSubject.next(true);
+    this.loginSubject.next(true);
   }
 
-  getSession():string | null{
-    return localStorage.getItem(this.API_KEY);
+  getApiKey():string{
+    const apikey = localStorage.getItem(this.API_KEY);
+
+    if(apikey === null){
+      return "";
+    }
+    
+    return apikey;
   }
 
   logout():void{
     localStorage.removeItem(this.API_KEY);
-    this.dynamicSubject.next(false);
+    this.loginSubject.next(false);
   }
 }

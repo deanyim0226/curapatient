@@ -28,8 +28,8 @@ export class EmployeeformComponent {
   }
 
   ngOnInit(): void {
-    this.employeeService.employees.subscribe((data)=>{
-      this.employees = data;
+    this.employeeService.employees.subscribe((latestEmployees)=>{
+      this.employees = latestEmployees;
     })
   }
 
@@ -43,28 +43,23 @@ export class EmployeeformComponent {
   } 
 
   addEmployee():void{
-    alert("add")
-
-
     this.employeeService.saveEmployee(this.employee).subscribe({
       next: (data)=>{
-        console.log(data);
+        alert("employee is succesfully added")
       },
       error: err=>{
-
+        alert("error while adding employee")
       }
     });
   }
 
   updateEmployee():void{
-    alert("update")
-   
     this.employeeService.updateEmployee(this.employee).subscribe({
       next: (data)=>{
-        console.log(data);
+        alert("employee is succesfully updated" + data);
       },
       error: err=>{
-
+        alert("error while updating employee")
       }
     })
     
@@ -75,10 +70,10 @@ export class EmployeeformComponent {
     alert("delete")
     this.employeeService.deleteEmployeeById(id).subscribe({
       next: (data)=>{
-        console.log(data);
+        alert("employee is succesfully deleted" + data);
       },
       error: err=>{
-
+        alert("error while deleting employee")
       }
     });
 
@@ -87,28 +82,27 @@ export class EmployeeformComponent {
   sendUpdate(id:number):void{
     
     this.employeeService.getEmployeeById(id).subscribe({
-      next: (data) =>{
-        this.employee = data;
+      next: (retrievedEmployee) =>{
+        this.employee = retrievedEmployee;
       },
       error: (err)=>{
-
+        alert("error while finding employee by id " + id);
       }
     })
     this.updateFlag = true;
 
   }
-
+ 
   get filteredEmployees() {
   
     if(this.employees){
-      return this.employees.filter(employee =>
-        employee.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        employee.employee_Id.toString().includes(this.searchTerm)
+      return this.employees.filter(currEmployee =>
+        currEmployee.employee_Id.toString().includes(this.searchTerm) ||
+        currEmployee.name.toLowerCase().includes(this.searchTerm.toLowerCase()) 
       );
     }
 
     return;
-    
   }
 
 }

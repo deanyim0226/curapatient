@@ -22,10 +22,10 @@ export class LoginPageComponent {
   login():void{
 
     this.userService.login(this.loginObj).subscribe({
-      next: (data) =>{
-      
-         this.userService.setSession(data.apikey);
-         this.errorMessage = null;
+      next: (data) =>{ 
+       
+        this.userService.setApikey(data.apikey);
+        this.errorMessage = null;
         this.router.navigateByUrl('/employee');
       },
       error: (error) =>{

@@ -2,29 +2,36 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.Employee;
 import com.example.demo.service.EmployeeService;
+import com.example.demo.service.UserService;
 import com.example.demo.util.Validate;
-import jakarta.persistence.criteria.CriteriaBuilder;
+
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
 @RestController
 public class EmployeeController {
 
-    private static final String APIKEY = "securityapikey";
     @Autowired
     EmployeeService employeeService;
     @Autowired
     Validate validate;
 
-
     @GetMapping("/getEmployeeByName")
-    public ResponseEntity<?> getEmployeeByName(@RequestParam String name){
-        Employee retrievedEmployee = employeeService.findEmployeeByName(name);
+    public ResponseEntity<?> getEmployeeByName(HttpServletRequest exchange, @RequestParam String name){
+        String apikey = exchange.getHeader(UserService.AUTH_APIKEY_HEADER_NAME);
 
+        if(!validate.isValidKey(apikey)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        Employee retrievedEmployee = employeeService.findEmployeeByName(name);
         if(retrievedEmployee == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
@@ -33,7 +40,13 @@ public class EmployeeController {
     }
 
     @GetMapping("/getEmployeeById")
-    public ResponseEntity<?> getEmployeeById(@RequestParam Integer id){
+    public ResponseEntity<?> getEmployeeById(HttpServletRequest exchange, @RequestParam Integer id){
+
+        String apikey = exchange.getHeader(UserService.AUTH_APIKEY_HEADER_NAME);
+
+        if(!validate.isValidKey(apikey)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
 
         if(!validate.isValidId(id)){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -49,21 +62,36 @@ public class EmployeeController {
     }
 
     @GetMapping("/getAllemployees")
-    public ResponseEntity<?> getAllEmployees(){
+    public ResponseEntity<?> getAllEmployees(HttpServletRequest exchange){
+        String apikey = exchange.getHeader(UserService.AUTH_APIKEY_HEADER_NAME);
+        System.out.println("apikey is "  + apikey);
+        if(!validate.isValidKey(apikey)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
 
         List<Employee> employeeList = employeeService.getAll();
         return ResponseEntity.status(HttpStatus.OK).body(employeeList);
     }
 
     @PostMapping("/saveEmployee")
-    public ResponseEntity<?> saveEmployee(@RequestBody Employee employee){
+    public ResponseEntity<?> saveEmployee(HttpServletRequest exchange, @RequestBody Employee employee){
+        String apikey = exchange.getHeader(UserService.AUTH_APIKEY_HEADER_NAME);
+
+        if(!validate.isValidKey(apikey)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
 
         Employee savedEmployee = employeeService.saveEmployee(employee);
         return ResponseEntity.status(HttpStatus.OK).body(savedEmployee);
     }
 
     @PutMapping("/updateEmployee")
-    public ResponseEntity<?> updateEmployee(@RequestBody Employee employee){
+    public ResponseEntity<?> updateEmployee(HttpServletRequest exchange, @RequestBody Employee employee){
+        String apikey = exchange.getHeader(UserService.AUTH_APIKEY_HEADER_NAME);
+
+        if(!validate.isValidKey(apikey)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
 
         if(!validate.isValidId(employee.getEmployee_Id())){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -81,7 +109,12 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/deleteEmployeeById")
-    public ResponseEntity<?> deleteEmployee(@RequestParam Integer id){
+    public ResponseEntity<?> deleteEmployee(HttpServletRequest exchange, @RequestParam Integer id){
+        String apikey = exchange.getHeader(UserService.AUTH_APIKEY_HEADER_NAME);
+
+        if(!validate.isValidKey(apikey)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
 
         if(!validate.isValidId(id)){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);

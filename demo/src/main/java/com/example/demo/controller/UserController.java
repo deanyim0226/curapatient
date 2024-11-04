@@ -5,7 +5,6 @@ import com.example.demo.model.request.LoginRequest;
 import com.example.demo.model.response.LoginResponse;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,9 +16,6 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
-
-    private static final String APIKEY = "securityapikey";
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request){
@@ -35,7 +31,7 @@ public class UserController {
         }
 
         LoginResponse response = new LoginResponse();
-        response.setApikey(APIKEY);
+        response.setApikey(userService.APIKEY);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -43,7 +39,6 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user){
 
-        System.out.println("user is " + user.getUsername() );
         User savedUser = userService.saveUser(user);
 
         if(savedUser == null){
@@ -52,4 +47,6 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.OK).body(savedUser);
     }
+
+
 }

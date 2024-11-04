@@ -5,11 +5,10 @@
       <h2>Employee Management</h2>
     </div>
   
-
-
     <!-- Search and Add New Button -->
     <div class="search-add">
       <div class="search-box">
+        <i class="bi bi-search" id="search-icon"></i>
         <input
         type="text" 
         placeholder="Search by name or ID" 
@@ -17,7 +16,7 @@
         class="search-input"
         />
       </div>
-      <button (click)="resetEmployee()" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-primary" >+ Add New</button>
+      <button id="btn" (click)="resetEmployee()" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-primary" >+ Add New</button>
     </div>
   
 
@@ -48,7 +47,8 @@
       </tbody>
     </table>
     </div>
-
+    
+    <!--Modal Employee Form-->
     <div class="modal fade" id="myModal" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -80,8 +80,8 @@
          
             </div>
             <div class="modal-footer">
-              <button *ngIf="!updateFlag" (click)="addEmployee()" data-bs-dismiss="modal" class="btn btn-primary">Sumbit</button>
-              <button *ngIf="updateFlag" (click)="updateEmployee()" data-bs-dismiss="modal" class="btn btn-primary">Sumbit</button>
+              <button *ngIf="!updateFlag" (click)="addEmployee()" data-bs-dismiss="modal" class="btn btn-primary">Add</button>
+              <button *ngIf="updateFlag" (click)="updateEmployee()" data-bs-dismiss="modal" class="btn btn-primary">Update</button>
               <button  class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
           </div>

@@ -10,8 +10,8 @@ import { UserService } from '../user/user.service';
   providedIn: 'root'
 })
 export class EmployeeService {
-  private dynamicSubject = new BehaviorSubject<Employee[]>([]);
-  public employees = this.dynamicSubject.asObservable();
+  private employeeSubject = new BehaviorSubject<Employee[]>([]);
+  public employees = this.employeeSubject.asObservable();
 
   SpringBaseUrl:string = 'http://localhost:8088';
   
@@ -30,58 +30,62 @@ export class EmployeeService {
     this.getAllEmployees();
   }
 
-  getEmployeeById(id:number): Observable<Employee> {
+  setHttpHeaders():HttpHeaders{
+    let apikey = this.userService.getApiKey();
+    return new HttpHeaders().set("x-api-key", apikey);
+  }
 
-    let params =new HttpParams().set("id",id.toString());
-    return this.http.get<Employee>(this.SpringBaseUrl+"/getEmployeeById",  {params});
+  getEmployeeById(id:number): Observable<Employee> {
+    const headers = this.setHttpHeaders();
+    const params =new HttpParams().set("id",id.toString());
+    return this.http.get<Employee>(this.SpringBaseUrl+"/getEmployeeById",  {headers, params});
   }
 
   getEmployeeByName(name:string): Observable<Employee> {
-
+    const headers = this.setHttpHeaders();
     let params =new HttpParams().set("name",name);
-    return this.http.get<Employee>(this.SpringBaseUrl+"/getEmployeeByName",  {params});
+    return this.http.get<Employee>(this.SpringBaseUrl+"/getEmployeeByName",  {headers, params});
   } 
 
   getAllEmployees():void{
-
-     this.http.get<Employee[]>(this.SpringBaseUrl+ '/getAllemployees').subscribe({
+    const headers = this.setHttpHeaders();
+     this.http.get<Employee[]>(this.SpringBaseUrl+ '/getAllemployees', {headers}).subscribe({
           next: data =>{
-            this.dynamicSubject.next(data);
+            this.employeeSubject.next(data);
           },
           error: error => {
-
+            alert("error while retrieving all employees")
           }          
-       
         });
   }
 
   saveEmployee(employee:Employee): Observable<Employee>{
-  
-    return this.http.post<Employee>(this.SpringBaseUrl+"/saveEmployee", employee).pipe(
+    const headers = this.setHttpHeaders();
+    return this.http.post<Employee>(this.SpringBaseUrl+"/saveEmployee" , employee, {headers}).pipe(
       tap((savedEmployee)=>{
-        const currentEmployees = this.dynamicSubject.value;
-        this.dynamicSubject.next([...currentEmployees, savedEmployee]);
+        const currentEmployees = this.employeeSubject.value;
+        this.employeeSubject.next([...currentEmployees, savedEmployee]);
       })
     )
   }
   
   updateEmployee(employee:Employee): Observable<Employee> {
-
-    return this.http.put<Employee>(this.SpringBaseUrl + "/updateEmployee", employee).pipe(
+    const headers = this.setHttpHeaders();
+    return this.http.put<Employee>(this.SpringBaseUrl + "/updateEmployee", employee, {headers}).pipe(
       tap((updatedEmployee)=>{
-        const  updatedEmployees = this.dynamicSubject.value.map((existedEmployee)=> existedEmployee.employee_Id === employee.employee_Id ? updatedEmployee : existedEmployee);
-        this.dynamicSubject.next(updatedEmployees);
+        const  updatedEmployees = this.employeeSubject.value.map((existedEmployee)=> existedEmployee.employee_Id === employee.employee_Id ? updatedEmployee : existedEmployee);
+        this.employeeSubject.next(updatedEmployees);
       })
     )
   }
 
   deleteEmployeeById(id:number): Observable<Employee> {
+    const headers = this.setHttpHeaders();
     let params = new HttpParams().set("id", id.toString());
-    return this.http.delete<Employee>(this.SpringBaseUrl+ "/deleteEmployeeById", {params}).pipe(
+    return this.http.delete<Employee>(this.SpringBaseUrl+ "/deleteEmployeeById", {params,headers}).pipe(
       tap(()=>{
-        const updatedEmployees = this.dynamicSubject.value.filter((existedEmployee)=> existedEmployee.employee_Id !== id)
-
-        this.dynamicSubject.next(updatedEmployees);
+        const updatedEmployees = this.employeeSubject.value.filter((existedEmployee)=> existedEmployee.employee_Id !== id)
+        this.employeeSubject.next(updatedEmployees);
       })
     )
   }
