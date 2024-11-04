@@ -10,21 +10,26 @@ import { HeaderComponent } from './header/header.component';
 import { EmployeePageComponent } from './pages/employee-page/employee-page.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
+
+import { EmployeelistComponent } from './component/employeelist/employeelist.component';
+import { EmployeeformComponent } from './component/employeeform/employeeform.component';
 /*
 
 */
+
 @NgModule({
   declarations: [ //put all the components used in the app
     AppComponent,
     HomePageComponent,
     HeaderComponent, 
-    EmployeePageComponent, RegisterPageComponent, LoginPageComponent
+    EmployeePageComponent, RegisterPageComponent, LoginPageComponent, EmployeelistComponent, EmployeeformComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule, // to use ngModel for two-way binding
-    HttpClientModule // to use HTTP request 
+    HttpClientModule, // to use HTTP request 
+  
   ],
   providers: [],
   bootstrap: [AppComponent]

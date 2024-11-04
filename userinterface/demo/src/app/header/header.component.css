@@ -14,6 +14,8 @@ a:hover{
 }
 
 .container{
+    padding-left: 1em;
+    padding-right: 1em;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -27,9 +29,30 @@ nav ul{
 nav ul li a{
     display: inline-block;
     padding: 1em;
+    font-size: 1.2em;
 }
 
-.logo{
-    font-weight: bold;
-    padding: 1em;
+.logo:hover{
+    background: none;
 }
+
+.logo img {
+ 
+    height: 55px; 
+    width: auto;  
+
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+ 
+    nav ul li a{
+        font-size: 13px;
+    }
+
+    .logo img {
+        height: 40px; 
+    }
+    
+}
+  

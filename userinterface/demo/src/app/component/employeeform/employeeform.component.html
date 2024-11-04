@@ -1,0 +1,89 @@
+
+<div class="container">
+    <!-- Header Section -->
+    <div class="header-section">
+      <h2>Employee Management</h2>
+    </div>
+  
+
+
+    <!-- Search and Add New Button -->
+    <div class="search-add">
+      <div class="search-box">
+        <input
+        type="text" 
+        placeholder="Search by name or ID" 
+        [(ngModel)]="searchTerm" 
+        class="search-input"
+        />
+      </div>
+      <button (click)="resetEmployee()" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-primary" >+ Add New</button>
+    </div>
+  
+
+    <!-- Employee Table -->
+    <table class="table"  >
+      <thead class="table-primary">
+        <tr>
+          <th>Employee Id</th>
+          <th>Name</th>
+          <th>Phone Number</th>
+          <th>Supervisors</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr  *ngFor="let employee of filteredEmployees" >
+            <th>{{employee.employee_Id}}</th>
+            <th>{{employee.name}}</th>
+            <th>{{employee.phone_number}}</th>
+            <th>{{employee.supervisors}}</th>
+            <th>
+                <ul class="action-list">
+                    <li><i (click)="sendUpdate(employee.employee_Id)" data-bs-toggle="modal" data-bs-target="#myModal" id="update" class="bi bi-pencil-square fs-5"></i></li>
+                    <li><i (click)="deleteEmployee(employee.employee_Id)" id="delete" class="bi bi-x-square fs-5"></i></li>
+                </ul>
+            </th>
+          </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="modal fade" id="myModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="myModalLabel">Employee Form</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col">
+
+                    <input  class="form-control" 
+                    type="text" 
+                    [(ngModel)]="employee.name" 
+                    placeholder="Name" 
+                    />
+    
+                    <input  class="form-control" 
+                    type="text" 
+                    [(ngModel)]="employee.phone_number" 
+                    placeholder="Phone Number" 
+                    />
+    
+                    <input  class="form-control" 
+                    type="text" 
+                    [(ngModel)]="employee.supervisors" 
+                    placeholder="Supervisors" 
+                    />
+                </div>
+         
+            </div>
+            <div class="modal-footer">
+              <button *ngIf="!updateFlag" (click)="addEmployee()" data-bs-dismiss="modal" class="btn btn-primary">Sumbit</button>
+              <button *ngIf="updateFlag" (click)="updateEmployee()" data-bs-dismiss="modal" class="btn btn-primary">Sumbit</button>
+              <button  class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>

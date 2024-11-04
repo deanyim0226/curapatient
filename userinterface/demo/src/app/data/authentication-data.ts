@@ -1,4 +1,4 @@
 
 export interface authentication{
-    apiKey:string;
+    apikey:string;
 }

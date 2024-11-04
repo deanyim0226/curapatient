@@ -13,6 +13,17 @@ export class HeaderComponent implements OnInit{
 
   }
   ngOnInit(): void {
+    
+    this.service.isloggedIn.subscribe(status=>{
+      this.isloggedIn = status;
+      
+      if(localStorage.getItem(this.service.API_KEY) !== undefined && localStorage.getItem(this.service.API_KEY) !== null){
+        this.isloggedIn = true;
+      }
+    })
   }
 
+  logout(){
+    this.service.logout();
+  }
 }

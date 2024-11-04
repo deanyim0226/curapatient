@@ -1,0 +1,117 @@
+.container{
+    display: flex;
+
+    position: absolute;
+
+    top: 7rem;
+    left: 3rem;
+    right:0;
+    bottom:0;
+
+    width: 500px;
+    height: 415px;
+
+    padding: 2em;
+    margin-top: 3.5em;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    background-color: #f0f0f5;
+    border: 1px solid #ebebeb;
+    box-shadow: 0px 1px 20px 1px rgba(0,0,0,0.8);
+}
+
+.header{
+    display: flex;
+    margin-bottom: 10px; 
+}
+
+.error {
+    color: red;
+    font-size: 1em;
+    padding-top: 0.5em;
+    padding-left: 1em;
+}
+
+.input{
+    padding-bottom: 1em;
+}
+
+input{
+    display: block;
+    box-sizing: border-box;
+    width: 27em;
+    outline: none;
+    height: 40px;
+    line-height: 30px;
+    font-size: 1em;
+    text-indent: 1em;
+}
+
+label b{
+    font-size: 1.3em;
+}
+
+button{
+    display: block;
+    background-color: black;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 10px;
+    width: 24em;
+    padding: 0.5em;
+    font-size: 18px;
+
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    height: 2.8em;
+    cursor: pointer;
+}
+button:hover{
+    color: #525252;
+}
+
+
+@media all and (max-width: 768px) {
+    .container {
+        width: 35%;
+        padding: 1.5em;
+        top: 4rem;
+        left: 1rem;
+        right: 1rem;
+        margin-top: 2em;
+        box-shadow: 0px 1px 10px 1px rgba(0,0,0,0.5); 
+    }
+
+    input, button {
+        width: 100%; 
+        font-size: 1em;
+    }
+
+    button{
+        margin-top: 1em;
+    }
+
+    .header h2 {
+        font-size: 1.2em; 
+    }
+
+    label b{
+        font-size: 1em;
+    }
+}
+
+
+@media all and (max-width: 550px) {
+
+
+    input, button {
+        font-size: 13px;
+    }
+
+    label b{
+        font-size: 13px;
+    }
+}

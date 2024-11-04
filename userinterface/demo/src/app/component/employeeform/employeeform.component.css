@@ -1,0 +1,58 @@
+.container {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .header-section {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+  .search-add {
+    display: flex;
+    margin-bottom: 1.5em;
+  }
+  
+  .search-box {
+    flex: 1;
+    margin-right: 2em;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 0.5em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .action-list {
+    display: flex;
+    list-style-type: none; /* Removes the bullet points */
+    padding: 0;
+    margin: 0;
+  }
+  
+  .action-list li {
+    margin-right: 10px; /* Adds some space between items */
+  }
+
+  #delete:hover{
+    background-color: lightcoral;
+  }
+
+  #update:hover{
+    background-color: lightblue;
+  }
+
+  .form-control{
+    margin: 15px;
+    width: 27em;
+  }
+
+  /* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        margin: 0;
+    }
+  }
+  

@@ -1,0 +1,20 @@
+
+div{
+    display: flex;
+    width: 100%;
+}
+
+app-employeeform{
+    flex:75%;
+}
+app-employeelist{
+    flex:25%;
+}
+
+@media (max-width: 768px) {
+    .container {
+      flex-direction: column; 
+    }
+
+}
+  

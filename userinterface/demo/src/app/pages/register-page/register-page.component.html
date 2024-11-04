@@ -1,1 +1,37 @@
-<p>register-page works!</p>
+
+<div class="container">
+    <form>
+        <div class="header">
+            <h2>Register</h2>
+            <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+        </div>
+
+        <div class="input">
+            <label>
+                <b>Username</b>
+       
+                <input type="text" placeholder="Username" name="username" [(ngModel)] = "registerObj.username" required/>
+            </label>
+        </div>
+        <div class="input">
+            <label>
+                <b>Password</b>
+                <input type="password" placeholder="Password" name="password" [(ngModel)] = "registerObj.password" required />
+            </label>
+        </div>
+        <div class="input">
+            <label>
+                <b>Re-password</b>
+                <input type="password" placeholder="Re-password" name="re-password" [(ngModel)] = "registerObj.re_password" required/>
+            </label>
+        </div>
+
+        <button (click)="register()"> Register</button>
+
+    </form>
+</div>
+
+<!--
+when using ngModel for two-way data binding in a form,
+adding a name attribute is required
+-->

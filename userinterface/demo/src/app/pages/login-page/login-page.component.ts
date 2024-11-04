@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/app/data/user-data';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -9,19 +10,28 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class LoginPageComponent {
   
-  
-  constructor(private userService: UserService){
+  loginObj:any = {
+    username: '',
+    password: ''
+  }
+  errorMessage:string | null = null;
 
+  constructor(private userService: UserService, private router: Router){
   }
 
-  login(user:User){
+  login():void{
 
-    this.userService.login(user).subscribe({
+    this.userService.login(this.loginObj).subscribe({
       next: (data) =>{
-         this.userService.setSession(data.apiKey);
+      
+         this.userService.setSession(data.apikey);
+         this.errorMessage = null;
+        this.router.navigateByUrl('/employee');
       },
       error: (error) =>{
-        alert("error while login");
+        alert("error while login" );
+        this.errorMessage= "Password or Username is incorrect"
+
       }
     })
   }

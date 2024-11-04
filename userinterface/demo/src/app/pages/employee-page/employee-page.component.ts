@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Employee } from 'src/app/data/employee-data';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-employee-page',
@@ -9,23 +10,13 @@ import { EmployeeService } from 'src/app/services/employee/employee.service';
   styleUrls: ['./employee-page.component.css']
 })
 export class EmployeePageComponent implements OnInit{
-
-  employees?:Employee[];
-
-
-  constructor(private employeeService: EmployeeService){
+  
+  constructor(){
 
   }
 
   ngOnInit(): void {
-    this.employeeService.getAllEmployees().subscribe({
-      next: (data) =>{
-        this.employees = data;
-      },
-      error: (err) => {
-        alert("error while retrieving the employees");
-      }
-    });
-    
+
   }
+
 }

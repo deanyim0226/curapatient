@@ -1,12 +1,16 @@
 <header>
     <div class="container">
-        <a href="#" routerLink="" class="logo">CuraPatient</a>
+        <a href="#" routerLink="" class="logo">
+            <img src="../assets/curapatient.png"> 
+            
+        </a>
         <nav>
             <ul>
                 <li>
-                    <a href="#" routerLink="/login">Sign In</a>
-                    <a href="#" routerLink="/register">Register</a>
-                    <a href="#" routerLink="/employee">Employee</a>
+                    <a *ngIf="!isloggedIn" href="#" routerLink="/login">Login</a>
+                    <a *ngIf="!isloggedIn" href="#" routerLink="/register">Register</a>
+                    <a *ngIf="isloggedIn" href="#" routerLink="/employee">Employee</a>
+                    <a *ngIf="isloggedIn" href="#" (click)="logout()" >Logout</a>
                 </li>
             </ul>
         </nav>
