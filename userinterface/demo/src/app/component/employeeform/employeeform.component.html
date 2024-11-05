@@ -33,19 +33,20 @@
       </thead>
       <tbody>
         <tr  *ngFor="let employee of filteredEmployees" >
-            <th>{{employee.employee_Id}}</th>
+            <th>{{employee.employee_id}}</th>
             <th>{{employee.name}}</th>
             <th>{{employee.phone_number}}</th>
             <th>{{employee.supervisors}}</th>
             <th>
                 <ul class="action-list">
-                    <li><i (click)="sendUpdate(employee.employee_Id)" data-bs-toggle="modal" data-bs-target="#myModal" id="update" class="bi bi-pencil-square fs-5"></i></li>
-                    <li><i (click)="deleteEmployee(employee.employee_Id)" id="delete" class="bi bi-x-square fs-5"></i></li>
+                    <li><i (click)="sendUpdate(employee.employee_id)" data-bs-toggle="modal" data-bs-target="#myModal" id="update" class="bi bi-pencil-square fs-5"></i></li>
+                    <li><i (click)="deleteEmployee(employee.employee_id)" id="delete" class="bi bi-x-square fs-5"></i></li>
                 </ul>
             </th>
           </tr>
       </tbody>
     </table>
+
     </div>
     
     <!--Modal Employee Form-->

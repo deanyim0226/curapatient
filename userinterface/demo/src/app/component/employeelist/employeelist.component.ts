@@ -11,23 +11,15 @@ export class EmployeelistComponent {
 
   employees?:Employee[];
 
-  newEmployee:Employee = {
-    employee_Id:0,
-    name:'', 
-    phone_number:'',
-    supervisors:''
-  }
-
-  searchTerm:string = '';
-
   constructor(private employeeService: EmployeeService){
 
   }
 
   ngOnInit(): void {
-    this.employeeService.employees.subscribe((data)=>{
-      this.employees = data;
+    this.employeeService.employees.subscribe((employeeList)=>{
+      this.employees = employeeList;
     })
   }
-  
+
+
 }

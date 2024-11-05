@@ -5,6 +5,8 @@ import com.example.demo.repository.EmployeeJdbcRepository;
 import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ public class EmployeeServiceImplementation implements EmployeeService {
     @Autowired
     EmployeeJdbcRepository employeeJdbcRepository;
 
+
+    ////////////////////////////////////JPA/////////////////////////////////////////
     @Override
     public Employee findEmployeeByName(String name) {
 
@@ -43,7 +47,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
     @Override
     public Employee updateEmployee(Employee employee) {
 
-        Employee retrievedEmployee = employeeRepository.findById(employee.getEmployee_Id()).orElse(null);
+        Employee retrievedEmployee = employeeRepository.findById(employee.getEmployee_id()).orElse(null);
 
         if(retrievedEmployee != null){
             String employeeName = employee.getName();
@@ -81,9 +85,20 @@ public class EmployeeServiceImplementation implements EmployeeService {
 
     @Override
     public Employee saveEmployee(Employee newEmployee) {
+        Integer id = newEmployee.getEmployee_id();
+
+        Employee retrievedEmployee = employeeRepository.findById(id).orElse(null);
+        if(retrievedEmployee != null){
+            return null;
+        }
 
         Employee employee = employeeRepository.save(newEmployee);
         return employee;
+    }
+
+    @Override
+    public Page<Employee> findEmployees(Pageable pageable) {
+        return employeeRepository.findAll(pageable);
     }
 
     ////////////////////////////////////JDBC TEMPLATE/////////////////////////////////////////
@@ -106,17 +121,18 @@ public class EmployeeServiceImplementation implements EmployeeService {
     }
 
     @Override
-    public void updateEmployeeUsingJdbc(Employee employee) {
-        employeeJdbcRepository.updateEmployee(employee);
+    public Employee updateEmployeeUsingJdbc(Employee employee) {
+
+        return employeeJdbcRepository.updateEmployee(employee);
     }
 
     @Override
-    public void deleteEmployeeUsingJdbc(Integer id) {
-        employeeJdbcRepository.deleteEmployee(id);
+    public Employee deleteEmployeeUsingJdbc(Integer id) {
+        return employeeJdbcRepository.deleteEmployee(id);
     }
 
     @Override
-    public void saveEmployeeUsingJdbc(Employee newEmployee) {
-        employeeJdbcRepository.saveEmployee(newEmployee);
+    public Employee saveEmployeeUsingJdbc(Employee newEmployee) {
+        return employeeJdbcRepository.saveEmployee(newEmployee);
     }
 }

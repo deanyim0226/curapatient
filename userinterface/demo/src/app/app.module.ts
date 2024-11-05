@@ -13,6 +13,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 import { EmployeelistComponent } from './component/employeelist/employeelist.component';
 import { EmployeeformComponent } from './component/employeeform/employeeform.component';
+
 /*
 
 */
@@ -22,6 +23,7 @@ import { EmployeeformComponent } from './component/employeeform/employeeform.com
     AppComponent,
     HomePageComponent,
     HeaderComponent, 
+    
     EmployeePageComponent, RegisterPageComponent, LoginPageComponent, EmployeelistComponent, EmployeeformComponent
   ],
   imports: [

@@ -9,11 +9,11 @@ import { EmployeeService } from 'src/app/services/employee/employee.service';
   styleUrls: ['./employeeform.component.css']
 })
 export class EmployeeformComponent {
-
+ 
   employees?:Employee[];
 
   employee:Employee = {
-    employee_Id:0,
+    employee_id:0,
     name:'', 
     phone_number:'',
     supervisors:''
@@ -32,10 +32,10 @@ export class EmployeeformComponent {
       this.employees = latestEmployees;
     })
   }
-
+  
   resetEmployee():void{
     this.employee = {
-      employee_Id:0,
+      employee_id:0,
       name:'', 
       phone_number:'',
       supervisors:''
@@ -45,7 +45,7 @@ export class EmployeeformComponent {
   addEmployee():void{
     this.employeeService.saveEmployee(this.employee).subscribe({
       next: (data)=>{
-        alert("employee is succesfully added")
+        alert("employee is succesfully added");
       },
       error: err=>{
         alert("error while adding employee")
@@ -56,7 +56,7 @@ export class EmployeeformComponent {
   updateEmployee():void{
     this.employeeService.updateEmployee(this.employee).subscribe({
       next: (data)=>{
-        alert("employee is succesfully updated" + data);
+        alert("employee is succesfully updated");
       },
       error: err=>{
         alert("error while updating employee")
@@ -70,7 +70,7 @@ export class EmployeeformComponent {
     alert("delete")
     this.employeeService.deleteEmployeeById(id).subscribe({
       next: (data)=>{
-        alert("employee is succesfully deleted" + data);
+        alert("employee is succesfully deleted");
       },
       error: err=>{
         alert("error while deleting employee")
@@ -94,10 +94,10 @@ export class EmployeeformComponent {
   }
  
   get filteredEmployees() {
-  
+    
     if(this.employees){
       return this.employees.filter(currEmployee =>
-        currEmployee.employee_Id.toString().includes(this.searchTerm) ||
+        currEmployee.employee_id.toString().includes(this.searchTerm) ||
         currEmployee.name.toLowerCase().includes(this.searchTerm.toLowerCase()) 
       );
     }

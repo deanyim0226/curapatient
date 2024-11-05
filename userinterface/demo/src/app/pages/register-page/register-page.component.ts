@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/app/data/user-data';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -18,7 +19,7 @@ export class RegisterPageComponent {
   
 
 
-  constructor(private userService:UserService){
+  constructor(private userService:UserService, private router: Router){
 
   }
 
@@ -39,12 +40,19 @@ export class RegisterPageComponent {
 
       this.userService.registerUser(this.registerObj).subscribe({
         next: (data)=>{
-          alert("successfully created an user " + data);
+          alert("successfully created an user ");
           this.errorMessage = null;
+          this.router.navigateByUrl("/login");
         },
         error: (err) =>{
           alert("error while creating an user");
+
+          if(err.status === 400){
+            this.errorMessage = "Username should contain only alphabets";
+            return;
+          }
           this.errorMessage = "Username is already taken by other users";
+          
         }
       })
   }

@@ -23,8 +23,9 @@ public class EmployeeJdbcRepository {
 
     private static final String UPDATE_EMPLOYEE = "UPDATE employee SET ";
 
-    public void updateEmployee(Employee employee){
-        Integer employeeId = employee.getEmployee_Id();
+    public Employee updateEmployee(Employee employee){
+        Employee updatedEmployee = null;
+        Integer employeeId = employee.getEmployee_id();
         String employeeName = employee.getName();
         String phoneNumber = employee.getPhone_number();
         String supervisor = employee.getSupervisors();
@@ -65,14 +66,20 @@ public class EmployeeJdbcRepository {
 
             try {
                 jdbcTemplate.update(sql.toString(), source);
+
+                updatedEmployee = findEmployeeById(employeeId);
+                return updatedEmployee;
+
             } catch (DataAccessException e) {
                 throw e;
             }
         }
 
+        updatedEmployee = findEmployeeById(employeeId);
+        return updatedEmployee;
     }
 
-    public void deleteEmployee(Integer id){
+    public Employee deleteEmployee(Integer id){
         String sql =
                 "DELETE FROM employee " +
                         "WHERE employee_id = :id";
@@ -80,26 +87,32 @@ public class EmployeeJdbcRepository {
         source.addValue("id",id);
 
         try{
+
+            Employee deletedEmployee = findEmployeeById(id);
             this.jdbcTemplate.update(sql,source);
+            return deletedEmployee;
+
         }catch (DataAccessException e){
             throw e;
         }
     }
 
-    public void saveEmployee(Employee employee){
+    public Employee saveEmployee(Employee employee){
 
         String sql =
                 "INSERT INTO employee (employee_id,name,phone_number,supervisors)" +
                         "VALUES (:employee_id, :name, :phone_number,:supervisors);";
 
         MapSqlParameterSource source = new MapSqlParameterSource();
-        source.addValue("employee_id", employee.getEmployee_Id(), Types.INTEGER);
+        source.addValue("employee_id", employee.getEmployee_id(), Types.INTEGER);
         source.addValue("name", employee.getName(), Types.VARCHAR);
         source.addValue("phone_number", employee.getPhone_number(), Types.VARCHAR);
         source.addValue("supervisors", employee.getSupervisors(), Types.VARCHAR);
 
         try {
             this.jdbcTemplate.update(sql,source);
+            return employee;
+
         }catch (DataAccessException e){
             throw e;
         }
@@ -118,7 +131,7 @@ public class EmployeeJdbcRepository {
             Employee retrievedEmployee = this.jdbcTemplate.queryForObject(sql, source, ((rs, rowNum) -> {
 
                 Employee employee = new Employee();
-                employee.setEmployee_Id(rs.getInt("employee_id"));
+                employee.setEmployee_id(rs.getInt("employee_id"));
                 employee.setSupervisors(rs.getString("supervisors"));
                 employee.setName(rs.getString("name"));
                 employee.setPhone_number(rs.getString("phone_number"));
@@ -144,7 +157,7 @@ public class EmployeeJdbcRepository {
             Employee retrievedEmployee = this.jdbcTemplate.queryForObject(sql,source,(rs, rowNum) -> {
 
                 Employee employee = new Employee();
-                employee.setEmployee_Id(rs.getInt("employee_id"));
+                employee.setEmployee_id(rs.getInt("employee_id"));
                 employee.setName(rs.getString("name"));
                 employee.setPhone_number(rs.getString("phone_number"));
                 employee.setSupervisors(rs.getString("supervisors"));
@@ -176,7 +189,7 @@ public class EmployeeJdbcRepository {
                 rs is the resultset object represent the current row from query results
                  */
                 Employee employee = new Employee();
-                employee.setEmployee_Id(rs.getInt("employee_id"));
+                employee.setEmployee_id(rs.getInt("employee_id"));
                 employee.setName(rs.getString("name"));
                 employee.setPhone_number(rs.getString("phone_number"));
                 employee.setSupervisors(rs.getString("supervisors"));

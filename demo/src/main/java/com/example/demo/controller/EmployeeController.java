@@ -1,17 +1,22 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Employee;
+import com.example.demo.model.request.PageableRequest;
+import com.example.demo.model.response.PageableResponse;
 import com.example.demo.service.EmployeeService;
 import com.example.demo.service.UserService;
 import com.example.demo.util.Validate;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -22,6 +27,28 @@ public class EmployeeController {
     EmployeeService employeeService;
     @Autowired
     Validate validate;
+
+    @PostMapping("/getPagedEmployees")
+    public ResponseEntity<?> getPagedEmployees(HttpServletRequest exchange, @RequestBody PageableRequest request){
+        String apikey = exchange.getHeader(UserService.AUTH_APIKEY_HEADER_NAME);
+
+        if(!validate.isValidKey(apikey)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        Pageable pageable = null;
+        pageable = PageRequest.of(request.getPageNo(), request.getPageSize(), Sort.by(request.getSortBy()));
+
+        Page<Employee> pagedEmployees = employeeService.findEmployees(pageable);
+        List<Employee> employeeList = pagedEmployees.getContent();
+
+        PageableResponse response = new PageableResponse();
+        response.setEmployeeList(employeeList);
+        response.setTotalPages(pagedEmployees.getTotalPages());
+        response.setPageSize(request.getPageSize());
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
     @GetMapping("/getEmployeeByName")
     public ResponseEntity<?> getEmployeeByName(HttpServletRequest exchange, @RequestParam String name){
@@ -64,7 +91,7 @@ public class EmployeeController {
     @GetMapping("/getAllemployees")
     public ResponseEntity<?> getAllEmployees(HttpServletRequest exchange){
         String apikey = exchange.getHeader(UserService.AUTH_APIKEY_HEADER_NAME);
-        System.out.println("apikey is "  + apikey);
+
         if(!validate.isValidKey(apikey)){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
@@ -82,6 +109,10 @@ public class EmployeeController {
         }
 
         Employee savedEmployee = employeeService.saveEmployee(employee);
+
+        if(savedEmployee == null){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
         return ResponseEntity.status(HttpStatus.OK).body(savedEmployee);
     }
 
@@ -93,7 +124,7 @@ public class EmployeeController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
-        if(!validate.isValidId(employee.getEmployee_Id())){
+        if(!validate.isValidId(employee.getEmployee_id())){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
@@ -128,4 +159,5 @@ public class EmployeeController {
 
         return ResponseEntity.status(HttpStatus.OK).body(deletedEmployee);
     }
+
 }

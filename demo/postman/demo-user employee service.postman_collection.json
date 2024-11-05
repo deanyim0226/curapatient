@@ -1,0 +1,247 @@
+{
+  "info": {
+    "_postman_id": "aa312f36-9716-4ad1-adaf-b1dc9fbcddbe",
+    "name": "CuraPatient",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "20331521"
+  },
+  "item": [
+    {
+      "name": "getEmployeeByName",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "hardcodedsecurityapikey"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8088/getEmployeeByName?name=",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8088",
+          "path": [
+            "getEmployeeByName"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getEmployeeById",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "hardcodedsecurityapikey"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8088/getEmployeeById?id",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8088",
+          "path": [
+            "getEmployeeById"
+          ],
+          "query": [
+            {
+              "key": "id",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getAllemployees",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "hardcodedsecurityapikey"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8088/getAllemployees",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8088",
+          "path": [
+            "getAllemployees"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "saveEmployee",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "hardcodedsecurityapikey"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8088/saveEmployee",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8088",
+          "path": [
+            "saveEmployee"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"employee_Id\":0, \"name\": \"\", \"phone_number\": \"\", \"supervisors\": \"\"  }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "updateEmployee",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "hardcodedsecurityapikey"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8088/updateEmployee",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8088",
+          "path": [
+            "updateEmployee"
+          ]
+        },
+
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"employee_Id\":0, \"name\": \"\", \"phone_number\": \"\", \"supervisors\": \"\" }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deleteEmployee",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "hardcodedsecurityapikey"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8088/deleteEmployeeById?id=",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8088",
+          "path": [
+            "deleteEmployeeById"
+          ],
+          "query": [
+            {
+              "key": "id",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8088/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8088",
+          "path": [
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"username\": \"\", \"password\": \"\" }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8088/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8088",
+          "path": [
+            "register"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"username\": \"\", \"password\": \"\" }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    }
+  ]
+}

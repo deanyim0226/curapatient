@@ -10,6 +10,8 @@ import { UserService } from '../user/user.service';
   providedIn: 'root'
 })
 export class EmployeeService {
+
+
   private employeeSubject = new BehaviorSubject<Employee[]>([]);
   public employees = this.employeeSubject.asObservable();
 
@@ -24,15 +26,21 @@ export class EmployeeService {
 
     Observable is a data source that allows you to work with asynchronous data
   */
+  employeelist?:Employee[];
+
 
   constructor(private http: HttpClient, private userService:UserService) { 
-
+    
     this.getAllEmployees();
   }
 
   setHttpHeaders():HttpHeaders{
     let apikey = this.userService.getApiKey();
     return new HttpHeaders().set("x-api-key", apikey);
+  }
+
+  getPaginatedEmployees(currentPage:number):void{
+
   }
 
   getEmployeeById(id:number): Observable<Employee> {
@@ -52,6 +60,7 @@ export class EmployeeService {
      this.http.get<Employee[]>(this.SpringBaseUrl+ '/getAllemployees', {headers}).subscribe({
           next: data =>{
             this.employeeSubject.next(data);
+  
           },
           error: error => {
             alert("error while retrieving all employees")
@@ -73,7 +82,7 @@ export class EmployeeService {
     const headers = this.setHttpHeaders();
     return this.http.put<Employee>(this.SpringBaseUrl + "/updateEmployee", employee, {headers}).pipe(
       tap((updatedEmployee)=>{
-        const  updatedEmployees = this.employeeSubject.value.map((existedEmployee)=> existedEmployee.employee_Id === employee.employee_Id ? updatedEmployee : existedEmployee);
+        const  updatedEmployees = this.employeeSubject.value.map((existedEmployee)=> existedEmployee.employee_id === employee.employee_id ? updatedEmployee : existedEmployee);
         this.employeeSubject.next(updatedEmployees);
       })
     )
@@ -84,7 +93,7 @@ export class EmployeeService {
     let params = new HttpParams().set("id", id.toString());
     return this.http.delete<Employee>(this.SpringBaseUrl+ "/deleteEmployeeById", {params,headers}).pipe(
       tap(()=>{
-        const updatedEmployees = this.employeeSubject.value.filter((existedEmployee)=> existedEmployee.employee_Id !== id)
+        const updatedEmployees = this.employeeSubject.value.filter((existedEmployee)=> existedEmployee.employee_id !== id)
         this.employeeSubject.next(updatedEmployees);
       })
     )
