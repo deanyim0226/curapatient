@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { authentication } from 'src/app/data/authentication-data';
 import { User } from 'src/app/data/user-data';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class UserService {
   public loginStatus = this.loginSubject.asObservable();
   public readonly API_KEY = 'authentication'
   
-  SpringBaseUrl:string = 'http://localhost:8088';
+  SpringBaseUrl:string = environment.SpringBaseUrl;;
 
   constructor(private http: HttpClient) { }
 

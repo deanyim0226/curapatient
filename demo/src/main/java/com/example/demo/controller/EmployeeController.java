@@ -21,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class EmployeeController {
 
     @Autowired

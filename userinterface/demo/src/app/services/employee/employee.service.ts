@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 import {Employee} from "../../data/employee-data";
 import { UserService } from '../user/user.service';
-
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class EmployeeService {
   private employeeSubject = new BehaviorSubject<Employee[]>([]);
   public employees = this.employeeSubject.asObservable();
 
-  SpringBaseUrl:string = 'http://localhost:8088';
+  SpringBaseUrl:string = environment.SpringBaseUrl;
   
   /*
     http request, subscribe method is needed to execute the request

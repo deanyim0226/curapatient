@@ -30,7 +30,11 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
-
+		<dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>flying-saucer-pdf</artifactId>
+			<version>9.1.20</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
 dependency to use Spring Security
 -->
@@ -55,9 +59,25 @@ dependency to use Spring Security
 		</dependency>
 
 
+		<!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<version>6.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<!--
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+			-->
 		</dependency>
 
 		<dependency>
@@ -80,6 +100,12 @@ dependency to use Spring Security
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<!--
+		<finalName>curapatientDemo</finalName>
+		-->
 	</build>
 
+	<!--
+	<packaging>war</packaging>
+	-->
 </project>
